@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        label {
+            font-size: 18px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vote</h1>
+        <form id="voteForm">
+            <label for="voteOption">Select an option:</label>
+            <select id="voteOption" name="voteOption">
+                <!-- Options will be dynamically loaded here -->
+            </select>
+            <button type="submit">Submit Vote</button>
+        </form>
+
+        <!-- Display area for quote and picture -->
+        <div class="quote" id="quoteDisplay">
+            <p id="quoteText"></p>
+        </div>
+        <div class="picture" id="pictureDisplay">
+            <img id="pictureImage" src="" alt="Selected Option Image">
+        </div>
+    </div>
+
+    <!-- JavaScript files: ensure they are in the correct order -->
+    <script src="teacher.js" defer></script> 
+    <script src="student.js" defer></script>
+</body>
+</html>
+

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Voting Sections</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        label {
+            font-size: 18px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Voting Sections</h1>
+        <form id="votingSectionForm">
+            <div id="sectionsContainer">
+                <div class="section">
+                    <h3>Section 1</h3>
+                    <label for="sectionName">Section Name:</label>
+                    <input type="text" class="sectionName" required>
+
+                    <div class="optionsContainer">
+                        <h4>Voting Options</h4>
+                        <div class="option">
+                            <label>Student Name:</label>
+                            <input type="text" class="studentName" required>
+                            <label for="quote">Quote:</label>
+<textarea class="quote" rows="5" style="width: 25%; resize: vertical;" required></textarea>
+                            <label>Picture:</label>
+                            <input type="file" class="picture">
+                            <button type="button" class="removeOptionButton">Remove Option</button>
+                        </div>
+                    </div>
+                    <button type="button" class="addOptionButton">Add Another Option</button>
+                </div>
+            </div>
+            <button type="button" id="addSectionButton">Add Another Section</button>
+            <button type="button" id="removeSectionButton">Remove a Section</button>
+            <button type="submit">Create Voting Sections</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to add a new section
+        document.getElementById('addSectionButton').addEventListener('click', function() {
+            const sectionsContainer = document.getElementById('sectionsContainer');
+            const sectionCount = sectionsContainer.children.length + 1;
+
+            // Create a new section
+            const newSection = document.createElement('div');
+            newSection.classList.add('section');
+            newSection.innerHTML = `
+                <h3>Section ${sectionCount}</h3>
+                <label for="sectionName">Section Name:</label>
+                <input type="text" class="sectionName" required>
+
+                <div class="optionsContainer">
+                    <h4>Voting Options</h4>
+                    <div class="option">
+                        <label>Student Name:</label>
+                        <input type="text" class="studentName" required>
+                        <label>Quote:</label>
+                        <input type="text" class="quote">
+                        <label>Picture:</label>
+                        <input type="file" class="picture">
+                        <button type="button" class="removeOptionButton">Remove Option</button>
+                    </div>
+                </div>
+                <button type="button" class="addOptionButton">Add Another Option</button>
+            `;
+            sectionsContainer.appendChild(newSection);
+
+            // Attach event listeners to the new section's buttons
+            addOptionListeners(newSection);
+        });
+
+        // Function to add event listeners for adding/removing options
+        function addOptionListeners(section) {
+            section.querySelector('.addOptionButton').addEventListener('click', function() {
+                const optionsContainer = section.querySelector('.optionsContainer');
+                const optionCount = optionsContainer.children.length + 1;
+
+                const newOption = document.createElement('div');
+                newOption.classList.add('option');
+                newOption.innerHTML = `
+                    <!-- Example structure for each option in the teacher form -->
+<label for="StudentName">Student Name:</label>
+<input type="text" id="optionName" required>
+
+<label for="quote">Quote:</label>
+<input type="text" id="quote" required>
+
+<label for="picture">Picture:</label>
+<input type="file" id="picture" accept="image/*" required>
+
+                    <button type="button" class="removeOptionButton">Remove Option</button>
+                `;
+                optionsContainer.appendChild(newOption);
+
+                // Attach remove event listener to the new option's remove button
+                newOption.querySelector('.removeOptionButton').addEventListener('click', function() {
+                    optionsContainer.removeChild(newOption);
+                });
+            });
+
+            // Attach remove event listener to existing option's remove button
+            section.querySelectorAll('.removeOptionButton').forEach(button => {
+                button.addEventListener('click', function() {
+                    button.parentElement.remove();
+                });
+            });
+        }
+
+        // Initial section listeners
+        addOptionListeners(document.querySelector('.section'));
+
+        // Remove a section
+        document.getElementById('removeSectionButton').addEventListener('click', function() {
+            const sectionsContainer = document.getElementById('sectionsContainer');
+            const sections = sectionsContainer.children;
+
+            if (sections.length > 1) {
+                sectionsContainer.removeChild(sections[sections.length - 1]);
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('votingSectionForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const sections = Array.from(document.getElementsByClassName('section')).map(section => {
+                const sectionName = section.querySelector('.sectionName').value;
+                const options = Array.from(section.querySelectorAll('.option')).map(option => {
+                    return {
+                        name: option.querySelector('.optionName').value,
+                        quote: option.querySelector('.quote').value,
+                        picture: option.querySelector('.picture').files[0] ? option.querySelector('.picture').files[0].name : null
+                    };
+                });
+                return { sectionName, options };
+            });
+
+            // For this example, display a success alert
+            alert('Voting sections created successfully!');
+
+            // Redirect to the results page or voting page
+            // window.location.href = 'results.html';
+        });
+    </script>
+<script src="storage.js" defer></script>
+<script src="teacher.js" defer></script>
+
+</body>
+</html>
